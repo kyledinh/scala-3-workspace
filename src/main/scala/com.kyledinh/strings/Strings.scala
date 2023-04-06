@@ -20,3 +20,6 @@ object StrUtil {
   }
 
 }
+
+def checkAnagram(a: String, b: String): Boolean =
+  StrUtil.charCountMap(a) == StrUtil.charCountMap(b)
