@@ -7,4 +7,4 @@ val isPrime7 = Prime.is(7)
 
 if (isPrime7) println("Yup! 7 is prime")
 
-val x = Fibonacci.toSteps(6)
+val x = Fibonacci.toSteps(8)
