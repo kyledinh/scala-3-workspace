@@ -28,6 +28,29 @@ object Prime {
 
 }
 
+object Fibonacci  {
+
+  def fibNextVal(prev: Int, cur: Int) : Int = prev + cur 
+
+  @tailrec
+  def fibonateTailrec(maxStep: Int, curStep: Int, result: Vector[Int]): Vector[Int] = {
+    val nextVal = fibNextVal(result(curStep -2), result(curStep -1)) // steps counted from 1, index from 0
+    if (maxStep == curStep) result
+    else fibonateTailrec(maxStep, curStep + 1, result :+ nextVal)
+  }
+
+  def toSteps(n: Int): Vector[Int] = {
+    if (n == 0) Vector()
+    else if (n == 1) Vector(1)
+    else fibonateTailrec(n, 2, Vector[Int](1, 1)) 
+  }
+}
+
+  
+
+    
+
+
 object NumberProblems extends App {
 
   println(s"Is 7 prime: ${Prime.is(7)}")
