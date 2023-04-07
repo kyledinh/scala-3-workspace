@@ -3,7 +3,6 @@ package com.kyledinh.numbers
 import scala.annotation.tailrec
 import com.kyledinh.lists.{UberList, UberListNil}
 
-import com.kyledinh.lists.{UberList, UberListNil}
 object Prime {
 
   def is(n: Int): Boolean = {
@@ -45,14 +44,4 @@ object Fibonacci {
     else if (n == 1) Vector(0)
     else if (n == 2) Vector(0, 1)
     else fibonateTailrec(n, 3, Vector[Int](0, 1, 1))
-}
-
-object NumberProblems extends App {
-
-  println(s"Is 7 prime: ${Prime.is(7)}")
-  println(s"Is 12 prime: ${Prime.is(12)}")
-  println(s"Is 5 prime: ${Prime.is(5)}")
-  println(s"Is 39 prime: ${Prime.is(39)}")
-  println(s"Is 701 prime: ${Prime.is(701)}")
-  println("Number Problems")
 }
