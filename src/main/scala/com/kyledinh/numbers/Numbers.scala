@@ -3,6 +3,7 @@ package com.kyledinh.numbers
 import scala.annotation.tailrec
 import com.kyledinh.lists.{UberList, UberListNil}
 
+import com.kyledinh.lists.{UberList, UberListNil}
 object Prime {
 
   def is(n: Int): Boolean = {

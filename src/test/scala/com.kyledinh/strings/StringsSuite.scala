@@ -1,5 +1,5 @@
 import com.kyledinh.strings.StrUtil
-import com.kyledinh.strings.checkAnagram
+import com.kyledinh.strings.*
 
 class StringSuite extends munit.FunSuite {
   test("Testing StrUtil ") {
@@ -12,5 +12,14 @@ class StringSuite extends munit.FunSuite {
     assertEquals(checkAnagram("cat", "tac"), true)
     assertEquals(checkAnagram("listen", "silent"), true)
     assertEquals(checkAnagram("level", "llama"), false)
+  }
+
+  test("Testing Parentheses ") {
+    assertEquals(validParentheses("ac"), true)
+    assertEquals(validParentheses(")"), false)
+    assertEquals(validParentheses("("), false)
+    assertEquals(validParentheses("()"), true)
+    assertEquals(validParentheses("()()"), true)
+    assertEquals(validParentheses("(()())"), true)
   }
 }
