@@ -21,7 +21,7 @@ object Prime {
     if (n == 0) true
     else if (n == 1) true
     else if (n == 2) true
-    else if (n < 0) throw new ArithmeticException
+    else if (n < 0) false
     else byStepIsPrimeTailrec(UberList.from(2 to (n - 1)), n)
     // Improved the generation of candidate divisors
   }
@@ -39,9 +39,17 @@ object Fibonacci {
     else fibonateTailrec(maxStep, curStep + 1, result :+ nextVal)
   }
 
-  def toSteps(n: Int): Vector[Int] =
-    if (n == 0) Vector()
-    else if (n == 1) Vector(0)
-    else if (n == 2) Vector(0, 1)
-    else fibonateTailrec(n, 3, Vector[Int](0, 1, 1))
+  def toSteps(steps: Int): Vector[Int] =
+    if (steps == 0) Vector()
+    else if (steps == 1) Vector(0)
+    else if (steps == 2) Vector(0, 1)
+    else fibonateTailrec(steps, 3, Vector[Int](0, 1, 1))
+
+  def startAtForNSteps(prev: Int, start: Int, steps: Int): Vector[Int] =
+    // starts at step 3, early steps are known
+    val next = prev + start
+    if (steps < 3) Vector[Int](prev, start)
+    else if (steps < 4) Vector[Int](prev, start, next)
+    else fibonateTailrec(steps, 3, Vector[Int](prev, start, next))
+
 }

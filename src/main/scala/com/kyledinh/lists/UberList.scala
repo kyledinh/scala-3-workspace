@@ -86,5 +86,4 @@ object UberList {
       else convertToUberListTailrec(remaining.tail, remaining.head :: result)
     convertToUberListTailrec(iterable, UberListNil).reverse
   }
-
 }
