@@ -3,7 +3,7 @@ package com.kyledinh.problems
 import scala.annotation.tailrec
 
 case class Res(start: Int, end: Int) {
-  def overlap(other: Res): Boolean =
+  def overlaps(other: Res): Boolean =
     //      5 --------15        this
     // 1 ------ 10              other
     //              12----20    other
@@ -12,13 +12,13 @@ case class Res(start: Int, end: Int) {
     else false
 }
 
-def countRequiredReservations(res: Vector[Res]): Int = {
+def countRequiredRooms(res: Vector[Res]): Int = {
 
   def overlapsWithAnyInVector(res: Res, others: Vector[Res]): Boolean = {
     @tailrec
     def processThruOthers(res: Res, remaining: Vector[Res]): Boolean =
       if (remaining.isEmpty) false
-      else if (res.overlap(remaining.head)) true
+      else if (res.overlaps(remaining.head)) true
       else processThruOthers(res, remaining.tail)
     processThruOthers(res, others)
   }
@@ -34,9 +34,10 @@ def countRequiredReservations(res: Vector[Res]): Int = {
 }
 
 // This is the first stab at the problem, it does a double loop though, hmmmmm
+// best case N (you need N rooms), worst case N * N (you need 1 room)
 // I need to clean up the names, find a better algorithm
 object ResApp extends App {
   val reservations = Vector(Res(1, 10), Res(11, 15), Res(20, 40), Res(30, 50))
-  val count        = countRequiredReservations(reservations)
+  val count        = countRequiredRooms(reservations)
   println(s"Room count: $count")
 }
