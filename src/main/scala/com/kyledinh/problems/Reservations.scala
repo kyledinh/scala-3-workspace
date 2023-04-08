@@ -1,6 +1,8 @@
 package com.kyledinh.problems
 
 import scala.annotation.tailrec
+import scala.collection.mutable.Map
+import scala.collection.mutable.Stack
 
 case class Res(start: Int, end: Int) {
   def overlaps(other: Res): Boolean =
@@ -40,4 +42,43 @@ object ResApp extends App {
   val reservations = Vector(Res(1, 10), Res(11, 15), Res(20, 40), Res(30, 50))
   val count        = countRequiredRooms(reservations)
   println(s"Room count: $count")
+}
+
+def buildMapOfRes(reservations: Vector[Res]): Map[Int, Int] = {
+
+  def updateMap(key: Int, map: Map[Int, Int]): Map[Int, Int] =
+    if (map.contains(key)) {
+      val curCount = map(key)
+      map.updated(key, curCount + 1)
+    } else map.updated(key, 1)
+
+  def loopRes(res: Res, map: Map[Int, Int]): Map[Int, Int] = {
+    var maps = Stack[Map[Int, Int]]()
+    maps.push(map)
+    for (i <- res.start to res.end) maps.push(updateMap(i, maps.pop()))
+    return maps.pop()
+  }
+
+  @tailrec
+  def processRes(remaining: Vector[Res], map: Map[Int, Int]): Map[Int, Int] =
+    if (remaining.isEmpty) map
+    else processRes(remaining.tail, loopRes(remaining.head, map))
+
+  var timeMap = Map[Int, Int]()
+  processRes(reservations, timeMap)
+}
+
+object BetterResApp extends App {
+  // val reservations  = Vector(Res(1, 13), Res(11, 15), Res(20, 40), Res(30, 44))
+  val reservations = Vector(Res(1, 3), Res(2, 3), Res(3, 6))
+  var m            = buildMapOfRes(reservations)
+  println(s"Timeblock size: ${m.size}")
+  println(m.toString())
+
+  if m.size == 0 then {
+    println(s"Time slots are zero, no rooms are needed.")
+  } else {
+    val (time, cnt) = m.maxBy(_._2)
+    println(s"Room count: $cnt")
+  }
 }
