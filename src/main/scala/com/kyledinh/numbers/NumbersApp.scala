@@ -12,6 +12,6 @@ object NumberProblems extends App {
   val fib = Fibonacci.startAtForNSteps(5, 6, 5)
   println(s"fib: $fib")
 
-  val sv = Prime.makeSieve(20)
+  val sv = Prime.makeSieve(100)
   println(sv)
 }

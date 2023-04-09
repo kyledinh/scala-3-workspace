@@ -9,7 +9,7 @@ case class Res(start: Int, end: Int) {
     //      5 --------15        this
     // 1 ------ 10              other
     //              12----20    other
-    if this.start < other.end then true
+    if this.start < other.end && this.end > other.start then true
     else if this.end > other.start && this.end < other.end then true
     else false
 }
