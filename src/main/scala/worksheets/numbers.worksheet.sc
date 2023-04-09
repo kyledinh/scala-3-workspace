@@ -13,3 +13,5 @@ val y = Fibonacci.startAtForNSteps(10, 5, 7)
 val v = Vector.from(3 to 10)
 
 val s1 = Prime.makeSieve(100)
+
+val v2 = (1 to 4).map(n => (n, 1)).toMap

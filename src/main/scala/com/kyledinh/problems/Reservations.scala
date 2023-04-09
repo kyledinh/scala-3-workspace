@@ -1,7 +1,6 @@
 package com.kyledinh.problems
 
 import scala.annotation.tailrec
-import scala.collection.mutable.Map
 import scala.collection.mutable.Stack
 
 case class Res(start: Int, end: Int) {
@@ -46,6 +45,8 @@ object ResApp extends App {
 
 def buildMapOfRes(reservations: Vector[Res]): Map[Int, Int] = {
 
+  /*
+  // OLD
   def updateMap(key: Int, map: Map[Int, Int]): Map[Int, Int] =
     if (map.contains(key)) {
       val curCount = map(key)
@@ -66,11 +67,20 @@ def buildMapOfRes(reservations: Vector[Res]): Map[Int, Int] = {
 
   var timeMap = Map[Int, Int]()
   processRes(reservations, timeMap)
+   */
+  def mergeMap(a: Map[Int, Int], b: Map[Int, Int])(implicit num: Numeric[Int]): Map[Int, Int] =
+    b ++ a.map { case (key, value) => key -> num.plus(value, b.getOrElse(key, num.zero)) }
+
+  def resToMap(res: Res): Map[Int, Int] =
+    (res.start to res.end).map(n => (n, 1)).toMap
+
+  val resMaps = reservations.map(resToMap)
+  resMaps.reduce((a, b) => mergeMap(a, b))
 }
 
 object BetterResApp extends App {
   // val reservations  = Vector(Res(1, 13), Res(11, 15), Res(20, 40), Res(30, 44))
-  val reservations = Vector(Res(1, 3), Res(2, 3), Res(3, 6))
+  val reservations = Vector(Res(1, 3), Res(2, 3), Res(3, 6), Res(1, 7))
   var m            = buildMapOfRes(reservations)
   println(s"Timeblock size: ${m.size}")
   println(m.toString())
