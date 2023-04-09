@@ -2,8 +2,32 @@ package com.kyledinh.numbers
 
 import scala.annotation.tailrec
 import com.kyledinh.lists.{UberList, UberListNil}
-
+import scala.math.*
+import scala.collection.mutable.Stack
 object Prime {
+
+  def sqrtFloor(n: Int): Int = {
+    val root = sqrt(n.toDouble)
+    return ceil(root).toInt
+  }
+
+  def removeFromSieve(n: Int, top: Int, sieve: Vector[Int]): Vector[Int] = {
+    val seq = (2 * n) to top by n
+    sieve.diff(seq)
+  }
+
+  def loopRemoveFromSieve(topFactor: Int, max: Int, sieve: Vector[Int]): Vector[Int] = {
+    var sieves = Stack[Vector[Int]]()
+    sieves.push(sieve)
+    for (i <- 2 to topFactor) sieves.push(removeFromSieve(i, max, sieves.pop()))
+    return sieves.pop()
+  }
+
+  def makeSieve(max: Int): Vector[Int] = {
+    var sieve     = Vector.from(3 to max)
+    var topFactor = sqrtFloor(max)
+    return loopRemoveFromSieve(topFactor, max, sieve)
+  }
 
   def is(n: Int): Boolean = {
 
@@ -13,17 +37,18 @@ object Prime {
       else true
 
     @tailrec
-    def byStepIsPrimeTailrec(candidates: UberList[Int], n: Int): Boolean =
+    def byStepIsPrimeTailrec(candidates: Vector[Int], n: Int): Boolean =
       if (candidates.isEmpty) true
       else if (hasZeroRemainder(n, candidates.head)) false
       else byStepIsPrimeTailrec(candidates.tail, n)
+
+    val sieve = makeSieve(n - 1)
 
     if (n == 0) true
     else if (n == 1) true
     else if (n == 2) true
     else if (n < 0) false
-    else byStepIsPrimeTailrec(UberList.from(2 to (n - 1)), n)
-    // Improved the generation of candidate divisors
+    else byStepIsPrimeTailrec(sieve, n)
   }
 
 }
