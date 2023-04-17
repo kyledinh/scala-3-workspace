@@ -43,6 +43,7 @@ object ResApp extends App {
   println(s"Room count: $count")
 }
 
+// BETTER ALGORITHMN - LINEAR 
 def buildMapOfRes(reservations: Vector[Res]): Map[Int, Int] = {
 
   /*
@@ -68,6 +69,7 @@ def buildMapOfRes(reservations: Vector[Res]): Map[Int, Int] = {
   var timeMap = Map[Int, Int]()
   processRes(reservations, timeMap)
    */
+
   def mergeMap(a: Map[Int, Int], b: Map[Int, Int])(implicit num: Numeric[Int]): Map[Int, Int] =
     b ++ a.map { case (key, value) => key -> num.plus(value, b.getOrElse(key, num.zero)) }
 

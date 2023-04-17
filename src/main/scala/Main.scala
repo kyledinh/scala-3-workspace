@@ -1,5 +1,7 @@
-@main def hello: Unit =
-  println("Hello world!")
-  println(msg)
+import com.kyledinh.sudoku.*
 
-def msg = "I was compiled by Scala 3. :)"
+@main def hello: Unit =
+  println("Solving a Sudoku problem...")
+
+val s1 = Sudoku.loadFromResource("puzzles/sudoku_5.txt")
+val answer = Sudoku.simulate(s1)
